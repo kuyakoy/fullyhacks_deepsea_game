@@ -1,47 +1,76 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class TaskManager : MonoBehaviour
 {
-    [Header("Input Fields")]
-    public TMP_InputField taskNameInput;
-    public TMP_InputField pomoCountInput;
+    [Header("Task List")]
+    public GameObject add_button;
+    public GameObject t;
+    public GameObject parent;
 
-    [Header("Task List UI")]
-    public Transform taskListContainer;  // The content object inside your ScrollView
-    public GameObject taskItemPrefab;    // A prefab for each task row
+    [Header("Input Prompt")]
+    public GameObject prompt_ui;
+    public TMP_InputField task_name;
+    public TMP_InputField pomo_task;
+    public Button done_button;
 
-    [Header("Buttons")]
-    public Button addTaskButton;
+    [Header("Navigation")]
     public Button startPomoButton;
 
-    [Header("Display")]
-    public TMP_Text seaDollarsText;
+    private Vector3 new_position;
+    private Vector3 DEF_POS = new Vector3(150, 300, 0);
+    private Vector3 INCR_VEC = new Vector3(0, 60, 0);
+    private Transform but_transf;
+    private RectTransform view;
+    private int button_count = 0;
 
-    private List<GameObject> taskUIItems = new List<GameObject>();
-
-    void OnEnable()
+    void Start()
     {
-        RefreshUI();
+        but_transf = add_button.GetComponent<Transform>();
+        view = parent.GetComponent<RectTransform>();
+
+        add_button.GetComponent<Button>().onClick.AddListener(AddTask);
+        done_button.onClick.AddListener(CompletePrompt);
+
+        if (startPomoButton != null)
+            startPomoButton.onClick.AddListener(StartPomo);
+
+        new_position = DEF_POS;
     }
 
-    void RefreshUI()
+    void AddTask()
     {
-        if (seaDollarsText != null)
-            seaDollarsText.text = $"💰 {GameManager.Instance.seaDollars} Sea Dollars";
+        PromptTask();
+        button_count++;
+
+        if (button_count >= 9)
+            add_button.SetActive(false);
     }
 
-    public void AddTask()
+    void PromptTask()
     {
-        // Validate inputs
-        string name = taskNameInput.text.Trim();
-        if (string.IsNullOrEmpty(name)) return;
+        prompt_ui.SetActive(true);
+    }
 
-        if (!int.TryParse(pomoCountInput.text, out int pomos) || pomos <= 0) return;
+    void CompletePrompt()
+    {
+        string name = task_name.text;
+        int pomos = 1;
 
-        // Create the task data
+        if (int.TryParse(pomo_task.text, out int res))
+            pomos = res;
+
+        task_name.text = "";
+        pomo_task.text = "";
+
+        CompleteCreate(name, pomos);
+        prompt_ui.SetActive(false);
+    }
+
+    void CompleteCreate(string name, int pomos)
+    {
+        // Save to GameManager so BattleManager can access it
         Task newTask = new Task
         {
             taskName = name,
@@ -50,21 +79,51 @@ public class TaskManager : MonoBehaviour
         };
         GameManager.Instance.tasks.Add(newTask);
 
-        // Spawn a UI row
-        GameObject item = Instantiate(taskItemPrefab, taskListContainer);
-        TMP_Text[] labels = item.GetComponentsInChildren<TMP_Text>();
-        labels[0].text = name;
-        labels[1].text = $"🍅 x{pomos}";
-        taskUIItems.Add(item);
+        // Spawn the UI row
+        GameObject new_task = Instantiate(t);
+        new_task.transform.SetParent(parent.transform);
+        new_task.transform.localPosition = new_position;
 
-        // Clear inputs
-        taskNameInput.text = "";
-        pomoCountInput.text = "";
+        new_position -= INCR_VEC;
+        but_transf.localPosition -= INCR_VEC;
+
+        new_task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text = name;
+        new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Pomos to complete: " + pomos.ToString();
+        new_task.name = "task" + button_count;
+
+        // Capture index for delete
+        int capturedIndex = button_count;
+        new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(
+            delegate { DeleteTask(capturedIndex); }
+        );
     }
 
-    public void StartPomo()
+    void DeleteTask(int ind)
     {
-        // Need at least one incomplete task to start
+        // Remove from GameManager tasks list
+        if (ind - 1 < GameManager.Instance.tasks.Count)
+            GameManager.Instance.tasks.RemoveAt(ind - 1);
+
+        Destroy(parent.transform.GetChild(ind - 1).gameObject);
+        button_count--;
+        new_position = DEF_POS;
+
+        int i = 0;
+        foreach (Transform child in parent.transform)
+        {
+            child.localPosition = new_position;
+            child.gameObject.name = "task" + (i + 1).ToString();
+            new_position -= INCR_VEC;
+            i++;
+        }
+
+        new_position += INCR_VEC;
+        but_transf.localPosition = DEF_POS - ((i - 1) * INCR_VEC);
+        add_button.SetActive(true);
+    }
+
+    void StartPomo()
+    {
         Task active = GameManager.Instance.tasks.Find(t => !t.isComplete);
         if (active == null) return;
 
