@@ -3,19 +3,24 @@ using UnityEngine.UI;
 
 public class TaskManager : MonoBehaviour
 {
-    public Button add_button;
+    public GameObject add_button;
     public GameObject t;
     public GameObject parent;
 
     private Vector3 new_position;
+    private Transform but_transf;
+    private RectTransform view;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        but_transf = add_button.GetComponent<Transform>();
         Button add_bt = add_button.GetComponent<Button>();
         GameObject task_template = t.GetComponent<GameObject>();
-        add_button.onClick.AddListener(AddTask);
-        new_position = new Vector3(100,0,0);
+        view = parent.GetComponent<RectTransform>();
+        
+        add_bt.onClick.AddListener(AddTask);
+        new_position = new Vector3(100,-40,0);
     }
 
     // Update is called once per frame
@@ -24,13 +29,19 @@ public class TaskManager : MonoBehaviour
         
     }
     
+    private int button_count = 0;
     void AddTask()
     {
         GameObject new_task = Instantiate(t);
         new_task.transform.SetParent(parent.transform);
         new_task.transform.localPosition = new_position;
         new_position -= new Vector3(0, 50, 0);
+        but_transf.localPosition -= new Vector3(0, 50 ,0);
+        button_count++;
 
+        if (button_count >= 9) {
+            add_button.SetActive(false);
+        }
     }
     
 }
