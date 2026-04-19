@@ -1,11 +1,16 @@
-# Markdown content for the README
-readme_content = """# PomoDori
+# PomoDori
 
 A gamified Pomodoro productivity tool developed for the FullyHacks 2026 hackathon (April 18-19, 2026).
 
 [View Video Demo](https://youtu.be/Jh9ttBdmM3g)
+[Download our game!](https://markerses.itch.io/domodori)
 
 ---
+
+## Contributors
+**Marcos Garcia** - Programmer
+**Brian Hlonggul** - Programmer
+**Joshua Marquez** - Programmer, Art, Music
 
 ## Inspiration
 
@@ -49,4 +54,4 @@ Our product is at a very minimal state, but for some of us, it was more than we 
 
 3. **Run:**
    Open the Main scene in the Assets folder and press Play.
-   ```
+   
