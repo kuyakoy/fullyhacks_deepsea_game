@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TaskManager : MonoBehaviour
+public class TaskManagerMe : MonoBehaviour
 {
     public GameObject add_button;
     public GameObject t;
