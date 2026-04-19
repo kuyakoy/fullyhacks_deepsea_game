@@ -20,13 +20,15 @@ public class GameManager : MonoBehaviour
     // ── Game Data ────────────────────────────────────────────
     [Header("Game Data")]
     public int seaDollars = 0;
-    public List<Task> tasks = new List<Task>();
     public GameState currentState;
 
     // ── TMP References ───────────────────────────────────────
     private TMP_Text TimerText;
     private TMP_Text CurrentTaskText;
     private TMP_Text SeaDollarsText;
+
+    // Internal Data
+    private string currentTask = null;
 
     // ============================================================
     //  UNITY LIFECYCLE
@@ -40,7 +42,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         FindTMPs();
-        TestTask();
         SwitchState(GameState.TaskList);
     }
 
@@ -52,17 +53,6 @@ public class GameManager : MonoBehaviour
         //  TimerText       = battlePanel.transform.Find("TimerText").GetComponent<TMP_Text>();
         //  CurrentTaskText = battlePanel.transform.Find("CurrentTaskText").GetComponent<TMP_Text>();
         //  SeaDollarsText  = battlePanel.transform.Find("SeaDollarsText").GetComponent<TMP_Text>();
-    }
-
-    void TestTask()
-    {
-        // TODO: remove this block when UI is working
-        AddTask("Test Task", 3);
-        Debug.Log("Tasks in list: " + tasks.Count);
-        Debug.Log("Task name: "     + tasks[0].taskName + " | Pomos required: " + tasks[0].pomosRequired);
-
-        if (TimerText != null)
-            TimerText.text = tasks[0].taskName;
     }
 
     // ============================================================
@@ -90,7 +80,7 @@ public class GameManager : MonoBehaviour
     void UpdateDisplay()
     {
         if (CurrentTaskText != null)
-            CurrentTaskText.text = "Current Task: " + GetActiveTask()?.taskName;
+            CurrentTaskText.text = "Current Task: " + currentTask;
 
         if (SeaDollarsText != null)
             SeaDollarsText.text = "Sea Dollars: " + seaDollars;
@@ -99,19 +89,11 @@ public class GameManager : MonoBehaviour
     // ============================================================
     //  TASKS
     // ============================================================
-    public void AddTask(string taskName, int pomosRequired)
+    public void ActivateTask(string name, int pomos)
     {
-        tasks.Add(new Task {
-            taskName       = taskName,
-            pomosRequired  = pomosRequired,
-            pomosCompleted = 0
-        });
-        Debug.Log("Task added: " + taskName + " | Pomos: " + pomosRequired);
-    }
-
-    public Task GetActiveTask()
-    {
-        return tasks.Find(t => !t.isComplete);
+        SwitchState(GameState.Battle);
+        currentTask = name;
+        
     }
 
     // ============================================================
@@ -122,16 +104,4 @@ public class GameManager : MonoBehaviour
         seaDollars += amount;
         UpdateDisplay();
     }
-}
-
-// ============================================================
-//  TASK DATA CLASS
-// ============================================================
-[System.Serializable]
-public class Task
-{
-    public string taskName;
-    public int    pomosRequired;
-    public int    pomosCompleted;
-    public bool   isComplete => pomosCompleted >= pomosRequired;
 }

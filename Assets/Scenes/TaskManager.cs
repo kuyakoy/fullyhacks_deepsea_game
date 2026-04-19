@@ -8,8 +8,10 @@ public class TaskManager : MonoBehaviour
     public GameObject t;
     public GameObject parent;
 
+    public GameManager manager;
+
     private Vector3 new_position;
-    private Vector3 DEF_POS = new Vector3(90, -40, 0);
+    private Vector3 DEF_POS = new Vector3(120, 0, 0);
     private Vector3 INCR_VEC = new Vector3(0, 60, 0);
     private Transform but_transf;
     private RectTransform view;
@@ -51,12 +53,13 @@ public class TaskManager : MonoBehaviour
         new_task.transform.localPosition = new_position;
 
         new_position -= INCR_VEC;
-        but_transf.localPosition -= INCR_VEC;
+        //but_transf.localPosition -= INCR_VEC;
         new_task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text = name;
         new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Pomo's to complete: " + pomos.ToString();
         new_task.name = "task" + button_count;
 
         new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(delegate {DeleteTask(new_task.name[4] - '0');});
+        new_task.transform.Find("Start").gameObject.GetComponent<Button>().onClick.AddListener(delegate {Activate(new_task.name[4] - '0');});
     }
 
     [Header("Input Items")]
@@ -108,7 +111,18 @@ public class TaskManager : MonoBehaviour
             Debug.Log(i);
             i++;
         }
-        but_transf.localPosition = DEF_POS - (i * INCR_VEC);
+        if (button_count < 9)
+        {
+            add_button.SetActive(true);
+        }
+        //but_transf.localPosition = DEF_POS - (i * INCR_VEC);
+    }
+
+    void Activate(int ind)
+    {
+        GameObject task = parent.transform.GetChild(ind - 1).gameObject;
+        string name_task = task.transform.GetChild("TaskName").GetComponent<TMP>.text;
+        manager.ActivateTask()
     }
     
 }

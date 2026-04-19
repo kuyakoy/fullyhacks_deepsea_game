@@ -56,7 +56,7 @@ public class BattleManager : MonoBehaviour
         {
             timeRemaining = 0f;
             isRunning = false;
-            OnPomoComplete();
+            //OnPomoComplete();
         }
     }
 
@@ -91,7 +91,7 @@ public class BattleManager : MonoBehaviour
 
     public float BattleProgress => timeElapsed / pomoDuration;
 
-    void OnPomoComplete()
+    /*void OnPomoComplete()
     {
         var tasks = GameManager.Instance.tasks;
         Task activeTask = tasks.Find(t => !t.isComplete);
@@ -101,4 +101,5 @@ public class BattleManager : MonoBehaviour
         GameManager.Instance.AddSeaDollars(seaDollarsReward);
         GameManager.Instance.SwitchState(GameState.Shop);
     }
+    */
 }
