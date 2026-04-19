@@ -42,7 +42,6 @@ public class TaskManager : MonoBehaviour
     void AddTask()
     {
         PromptTask();
-        button_count++;
 
         if (button_count >= 9)
             add_button.SetActive(false);
@@ -65,6 +64,7 @@ public class TaskManager : MonoBehaviour
         pomo_task.text = "";
 
         CompleteCreate(name, pomos);
+        button_count++;
         prompt_ui.SetActive(false);
     }
 
