@@ -49,9 +49,9 @@ public class GameManager : MonoBehaviour
     // ============================================================
     void FindTMPs()
     {
-        TimerText       = battlePanel.transform.Find("TimerText").GetComponent<TMP_Text>();
-        CurrentTaskText = battlePanel.transform.Find("CurrentTaskText").GetComponent<TMP_Text>();
-        SeaDollarsText  = battlePanel.transform.Find("SeaDollarsText").GetComponent<TMP_Text>();
+        //  TimerText       = battlePanel.transform.Find("TimerText").GetComponent<TMP_Text>();
+        //  CurrentTaskText = battlePanel.transform.Find("CurrentTaskText").GetComponent<TMP_Text>();
+        //  SeaDollarsText  = battlePanel.transform.Find("SeaDollarsText").GetComponent<TMP_Text>();
     }
 
     void TestTask()
