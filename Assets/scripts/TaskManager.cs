@@ -56,6 +56,7 @@ public class TaskManager : MonoBehaviour
         new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Pomo's to complete: " + pomos.ToString();
         new_task.name = "task" + button_count;
 
+<<<<<<< Updated upstream
         new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(delegate {DeleteTask(button_count);});
 =======
         new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(delegate {DeleteTask(new_task.name[4] - '0');});
