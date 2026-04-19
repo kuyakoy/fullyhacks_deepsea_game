@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2f44296b34c4e4709be79d8d207e95ea
+guid: 37bf65f93e3e7405b9edb607fd051feb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2509720347418515234
-    second: deepseagame_background_0
+      213: 1646862513356444063
+    second: deepseagame_background_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: deepseagame_background_0
+      name: deepseagame_background_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed8ac8e14aeab2dd0800000000000000
-      internalID: -2509720347418515234
+      spriteID: f91948efab4dad610800000000000000
+      internalID: 1646862513356444063
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      deepseagame_background_0: -2509720347418515234
+      deepseagame_background_2_0: 1646862513356444063
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
