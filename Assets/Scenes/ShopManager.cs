@@ -46,7 +46,7 @@ public class ShopManager : MonoBehaviour
         {
             timeRemaining = 0f;
             isRunning = false;
-            OnBreakComplete();
+            //OnBreakComplete();
         }
     }
 
@@ -104,9 +104,10 @@ public class ShopManager : MonoBehaviour
     public void SkipBreak()
     {
         isRunning = false;
-        OnBreakComplete();
+        //OnBreakComplete();
     }
 
+    /*
     void OnBreakComplete()
     {
         // Check if all tasks are done
@@ -116,6 +117,7 @@ public class ShopManager : MonoBehaviour
         else
             GameManager.Instance.SwitchState(GameState.Battle);   // back to work
     }
+    */
 }
 
 [System.Serializable]

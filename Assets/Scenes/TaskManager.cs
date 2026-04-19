@@ -1,73 +1,133 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class TaskManager : MonoBehaviour
 {
-    [Header("Input Fields")]
-    public TMP_InputField taskNameInput;
-    public TMP_InputField pomoCountInput;
+    public GameObject add_button;
+    public GameObject t;
+    public GameObject parent;
 
-    [Header("Task List UI")]
-    public Transform taskListContainer;  // The content object inside your ScrollView
-    public GameObject taskItemPrefab;    // A prefab for each task row
+    public GameManager manager;
 
-    [Header("Buttons")]
-    public Button addTaskButton;
-    public Button startPomoButton;
+    private Vector3 new_position;
+    private Vector3 DEF_POS = new Vector3(120, -45, 0);
+    private Vector3 INCR_VEC = new Vector3(0, 60, 0);
+    private Transform but_transf;
+    private RectTransform view;
 
-    [Header("Display")]
-    public TMP_Text seaDollarsText;
-
-    private List<GameObject> taskUIItems = new List<GameObject>();
-
-    void OnEnable()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        RefreshUI();
+        but_transf = add_button.GetComponent<Transform>();
+        Button add_bt = add_button.GetComponent<Button>();
+        GameObject task_template = t.GetComponent<GameObject>();
+        view = parent.GetComponent<RectTransform>();
+        
+        add_bt.onClick.AddListener(AddTask);
+        done_button.onClick.AddListener(CompletePrompt);
+        new_position = DEF_POS;
     }
 
-    void RefreshUI()
+    // Update is called once per frame
+    void Update()
     {
-        if (seaDollarsText != null)
-            seaDollarsText.text = $"💰 {GameManager.Instance.seaDollars} Sea Dollars";
+        
+    }
+    
+    private int button_count = 0;
+    void AddTask()
+    {
+        PromptTask();
+        button_count++;
+
+        if (button_count >= 9) {
+            add_button.SetActive(false);
+        }
     }
 
-    public void AddTask()
+    void CompleteCreate(string name, int pomos)
     {
-        // Validate inputs
-        string name = taskNameInput.text.Trim();
-        if (string.IsNullOrEmpty(name)) return;
+        GameObject new_task = Instantiate(t);
+        new_task.transform.SetParent(parent.transform);
+        new_task.transform.localPosition = new_position;
 
-        if (!int.TryParse(pomoCountInput.text, out int pomos) || pomos <= 0) return;
+        new_position -= INCR_VEC;
+        //but_transf.localPosition -= INCR_VEC;
+        new_task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text = name;
+        new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Rounds: " + pomos.ToString();
+        new_task.name = "task" + button_count;
 
-        // Create the task data
-        Task newTask = new Task
+        new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(delegate {DeleteTask(new_task.name[4] - '0');});
+        new_task.transform.Find("Start").gameObject.GetComponent<Button>().onClick.AddListener(delegate {Activate(new_task.name[4] - '0');});
+    }
+
+    [Header("Input Items")]
+    public GameObject prompt_ui;
+    public TMP_InputField task_name;
+    public TMP_InputField pomo_task;
+    public Button done_button;
+    
+    void PromptTask()
+    {
+        prompt_ui.SetActive(true);
+    }
+
+    void CompletePrompt()
+    {
+        string name = task_name.text;
+        int pomos = 1;
+        if (int.TryParse(pomo_task.text, out int res))
         {
-            taskName = name,
-            pomosRequired = pomos,
-            pomosCompleted = 0
-        };
-        GameManager.Instance.tasks.Add(newTask);
+            pomos = res;
+        } else
+        {
+            pomos = 1;
+        }
 
-        // Spawn a UI row
-        GameObject item = Instantiate(taskItemPrefab, taskListContainer);
-        TMP_Text[] labels = item.GetComponentsInChildren<TMP_Text>();
-        labels[0].text = name;
-        labels[1].text = $"🍅 x{pomos}";
-        taskUIItems.Add(item);
-
-        // Clear inputs
-        taskNameInput.text = "";
-        pomoCountInput.text = "";
+        task_name.text = "";
+        pomo_task.text = "";
+        CompleteCreate(name, pomos);
+        prompt_ui.SetActive(false);
     }
 
-    public void StartPomo()
+    void DeleteTask(int ind)
     {
-        // Need at least one incomplete task to start
-        Task active = GameManager.Instance.tasks.Find(t => !t.isComplete);
-        if (active == null) return;
-
-        GameManager.Instance.SwitchState(GameState.Battle);
+        Destroy(parent.transform.GetChild(ind - 1).gameObject);
+        button_count--;
+        new_position = DEF_POS;
+        int i = 0;
+        bool cont = false;
+        foreach (Transform child in parent.transform)
+        {
+            if (!cont && i == ind - 1)
+            {
+                cont = true;
+                continue;
+            }
+            child.localPosition = new_position;
+            child.gameObject.name = "task" + (i + 1).ToString();
+            new_position -= INCR_VEC;
+            Debug.Log(i);
+            i++;
+        }
+        if (button_count < 9)
+        {
+            add_button.SetActive(true);
+        }
+        //but_transf.localPosition = DEF_POS - (i * INCR_VEC);
     }
+
+    void Activate(int ind)
+    {
+       GameObject task = parent.transform.GetChild(ind - 1).gameObject;
+       string name_task = task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text;
+       
+       string pomosText = task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text;
+       int pomos = int.Parse(pomosText.Replace("Rounds: ", ""));
+       
+       manager.ActivateTask(name_task, pomos);
+       DeleteTask(ind);
+    }
+    
 }
