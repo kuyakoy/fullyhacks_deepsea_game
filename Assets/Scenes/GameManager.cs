@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     // ── TMP References ───────────────────────────────────────
     private TMP_Text TimerText;
     private TMP_Text CurrentTaskText;
-    private TMP_Text SeaDollarsText;
+    public TMP_Text SeaDollarsText;
 
     // Internal Data
     private string currentTask = null;
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         FindTMPs();
+        UpdateDisplay();
         SwitchState(StateOnStart);
     }
 
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
     // ============================================================
     //  DISPLAY
     // ============================================================
-    void UpdateDisplay()
+    public void UpdateDisplay()
     {
         if (CurrentTaskText != null)
             CurrentTaskText.text = "Current Task: " + currentTask;
