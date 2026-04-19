@@ -121,8 +121,9 @@ public class TaskManager : MonoBehaviour
     void Activate(int ind)
     {
         GameObject task = parent.transform.GetChild(ind - 1).gameObject;
-        string name_task = task.transform.GetChild("TaskName").GetComponent<TMP>.text;
-        manager.ActivateTask()
+        string name_task = task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text;
+        int pomos = task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text[20] - '0';
+        manager.ActivateTask(name_task, pomos);
     }
     
 }
