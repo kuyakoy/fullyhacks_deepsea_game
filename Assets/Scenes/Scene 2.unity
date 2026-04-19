@@ -2351,7 +2351,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2509720347418515234, guid: 2f44296b34c4e4709be79d8d207e95ea, type: 3}
+  m_Sprite: {fileID: 1646862513356444063, guid: 37bf65f93e3e7405b9edb607fd051feb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2822,10 +2822,11 @@ MonoBehaviour:
   fishContainer: {fileID: 1522675240}
   startY: 50
   maxDescentY: -1100
-  pomoMinutes: 1
+  pomoMinutes: 0.05
   breakMinutes: 0.05
   totalPomos: 3
   seaDollarsReward: 100
+  manager: {fileID: 0}
 --- !u!1 &1352608659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3441,6 +3442,7 @@ MonoBehaviour:
   shopPanel: {fileID: 1029869923}
   seaDollars: 0
   currentState: 1
+  battleScript: {fileID: 1296142925}
   SeaDollarsText: {fileID: 345338095}
 --- !u!1 &1691482795
 GameObject:
