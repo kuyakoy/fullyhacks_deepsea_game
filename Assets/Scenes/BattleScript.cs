@@ -5,12 +5,17 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     [Header("UI References")]
-    public TMP_Text timerText;          // MM:SS countdown
-    public TMP_Text elapsedText;        // shows time survived
-    public Slider battleProgressBar;    // goes from 0 --> 1
+    public TMP_Text timerText;
+    public TMP_Text elapsedText;
+    public Slider battleProgressBar;
+
+    [Header("Fish Descent")]
+    public RectTransform fishContainer;
+    public float startY = 50f;
+    public float maxDescentY = -300f;
 
     [Header("Settings")]
-    public float pomoDuration = 25f * 60f;   // seconds
+    public float pomoDuration = 25f * 60f;
     public int seaDollarsReward = 100;
 
     private float timeRemaining;
@@ -19,7 +24,6 @@ public class BattleManager : MonoBehaviour
 
     void OnEnable()
     {
-        // Called every time BattlePanel becomes active
         StartBattle();
     }
 
@@ -28,6 +32,11 @@ public class BattleManager : MonoBehaviour
         timeRemaining = pomoDuration;
         timeElapsed = 0f;
         isRunning = true;
+
+        // Reset fish position to top
+        if (fishContainer != null)
+            fishContainer.anchoredPosition = new Vector2(fishContainer.anchoredPosition.x, startY);
+
         UpdateTimerDisplay();
     }
 
@@ -41,6 +50,7 @@ public class BattleManager : MonoBehaviour
 
         UpdateTimerDisplay();
         UpdateProgressBar();
+        UpdateFishPosition();
 
         if (timeRemaining <= 0f)
         {
@@ -56,7 +66,6 @@ public class BattleManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeRemaining % 60f);
         timerText.text = $"{minutes:00}:{seconds:00}";
 
-        // Optional elapsed label — e.g. "Survived: 04:32"
         if (elapsedText != null)
         {
             int em = Mathf.FloorToInt(timeElapsed / 60f);
@@ -68,15 +77,22 @@ public class BattleManager : MonoBehaviour
     void UpdateProgressBar()
     {
         if (battleProgressBar != null)
-            battleProgressBar.value = timeElapsed / pomoDuration; // 0 → 1
+            battleProgressBar.value = timeElapsed / pomoDuration;
     }
 
-    // How far through the pomo (0.0 to 1.0) — use this to scale enemy damage etc.
+    void UpdateFishPosition()
+    {
+        if (fishContainer == null) return;
+
+        float progress = timeElapsed / pomoDuration; // 0 to 1
+        float newY = Mathf.Lerp(startY, maxDescentY, progress);
+        fishContainer.anchoredPosition = new Vector2(fishContainer.anchoredPosition.x, newY);
+    }
+
     public float BattleProgress => timeElapsed / pomoDuration;
 
     void OnPomoComplete()
     {
-        // Update the active task's pomo count
         var tasks = GameManager.Instance.tasks;
         Task activeTask = tasks.Find(t => !t.isComplete);
         if (activeTask != null)
