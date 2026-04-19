@@ -1,13 +1,11 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
     [Header("UI References")]
     public TMP_Text timerText;
     public TMP_Text elapsedText;
-    public Slider battleProgressBar;
 
     [Header("Fish Descent")]
     public RectTransform fishContainer;
@@ -33,7 +31,6 @@ public class BattleManager : MonoBehaviour
         timeElapsed = 0f;
         isRunning = true;
 
-        // Reset fish position to top
         if (fishContainer != null)
             fishContainer.anchoredPosition = new Vector2(fishContainer.anchoredPosition.x, startY);
 
@@ -49,7 +46,6 @@ public class BattleManager : MonoBehaviour
         timeElapsed   += delta;
 
         UpdateTimerDisplay();
-        UpdateProgressBar();
         UpdateFishPosition();
 
         if (timeRemaining <= 0f)
@@ -74,17 +70,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void UpdateProgressBar()
-    {
-        if (battleProgressBar != null)
-            battleProgressBar.value = timeElapsed / pomoDuration;
-    }
-
     void UpdateFishPosition()
     {
         if (fishContainer == null) return;
 
-        float progress = timeElapsed / pomoDuration; // 0 to 1
+        float progress = timeElapsed / pomoDuration;
         float newY = Mathf.Lerp(startY, maxDescentY, progress);
         fishContainer.anchoredPosition = new Vector2(fishContainer.anchoredPosition.x, newY);
     }

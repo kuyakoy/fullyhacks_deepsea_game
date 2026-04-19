@@ -9,6 +9,7 @@ public enum GameState { TaskList, Battle, Shop }
 // ============================================================
 public class GameManager : MonoBehaviour
 {
+    public GameState StateOnStart = GameState.Battle;
     public static GameManager Instance;
 
     // ── Panels ───────────────────────────────────────────────
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         FindTMPs();
-        SwitchState(GameState.TaskList);
+        SwitchState(StateOnStart);
     }
 
     // ============================================================
