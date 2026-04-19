@@ -18,9 +18,16 @@ public class BattleManager : MonoBehaviour
     public int   totalPomos    = 4;
     public int   seaDollarsReward = 100;
 
+    public void setPomos(int numPomos)
+    {
+        totalPomos = numPomos;
+    }
+
     // Calculated from minutes fields
     private float pomoDuration  => pomoMinutes  * 60f;
     private float breakDuration => breakMinutes * 60f;
+
+    public GameManager manager;
 
     private float timeRemaining;
     private float timeElapsed;
@@ -134,7 +141,7 @@ public class BattleManager : MonoBehaviour
         if (pomosCompleted >= totalPomos)
         {
             Debug.Log("All pomos complete!");
-            // GameManager.Instance.SwitchState(GameState.TaskList);
+            GameManager.Instance.SwitchState(GameState.TaskList);
         }
         else
         {
@@ -144,7 +151,7 @@ public class BattleManager : MonoBehaviour
 
     void OnBreakComplete()
     {
-        // GameManager.Instance.SwitchState(GameState.Battle);
+        //GameManager.Instance.SwitchState(GameState.TaskList);
         StartPomo();
     }
 

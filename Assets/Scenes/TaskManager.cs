@@ -11,7 +11,7 @@ public class TaskManager : MonoBehaviour
     public GameManager manager;
 
     private Vector3 new_position;
-    private Vector3 DEF_POS = new Vector3(120, 0, 0);
+    private Vector3 DEF_POS = new Vector3(120, -45, 0);
     private Vector3 INCR_VEC = new Vector3(0, 60, 0);
     private Transform but_transf;
     private RectTransform view;
@@ -55,7 +55,7 @@ public class TaskManager : MonoBehaviour
         new_position -= INCR_VEC;
         //but_transf.localPosition -= INCR_VEC;
         new_task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text = name;
-        new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Pomo's to complete: " + pomos.ToString();
+        new_task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text = "Rounds: " + pomos.ToString();
         new_task.name = "task" + button_count;
 
         new_task.transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(delegate {DeleteTask(new_task.name[4] - '0');});
@@ -120,10 +120,14 @@ public class TaskManager : MonoBehaviour
 
     void Activate(int ind)
     {
-        GameObject task = parent.transform.GetChild(ind - 1).gameObject;
-        string name_task = task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text;
-        int pomos = task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text[20] - '0';
-        manager.ActivateTask(name_task, pomos);
+       GameObject task = parent.transform.GetChild(ind - 1).gameObject;
+       string name_task = task.transform.Find("TaskName").gameObject.GetComponent<TMP_Text>().text;
+       
+       string pomosText = task.transform.Find("Pomos").gameObject.GetComponent<TMP_Text>().text;
+       int pomos = int.Parse(pomosText.Replace("Rounds: ", ""));
+       
+       manager.ActivateTask(name_task, pomos);
+       DeleteTask(ind);
     }
     
 }

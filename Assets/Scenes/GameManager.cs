@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public int seaDollars = 0;
     public GameState currentState;
 
+    public BattleManager battleScript;
+
     // ── TMP References ───────────────────────────────────────
     private TMP_Text TimerText;
     private TMP_Text CurrentTaskText;
@@ -70,9 +72,17 @@ public class GameManager : MonoBehaviour
 
         switch (newState)
         {
-            case GameState.TaskList: taskListPanel.SetActive(true); break;
-            case GameState.Battle:   battlePanel  .SetActive(true); break;
-            case GameState.Shop:     shopPanel    .SetActive(true); break;
+            case GameState.TaskList: 
+                taskListPanel.SetActive(true); 
+                break;
+
+            case GameState.Battle:   
+                battlePanel.SetActive(true);
+                break;
+
+            case GameState.Shop:     
+                shopPanel.SetActive(true); 
+                break;
         }
     }
 
@@ -93,9 +103,8 @@ public class GameManager : MonoBehaviour
     // ============================================================
     public void ActivateTask(string name, int pomos)
     {
+        battleScript.setPomos(pomos);
         SwitchState(GameState.Battle);
-        currentTask = name;
-        
     }
 
     // ============================================================

@@ -1190,8 +1190,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288373950
-  m_fontColor: {r: 0.745283, g: 0.39021894, b: 0.608036, a: 1}
+    rgba: 4292718572
+  m_fontColor: {r: 0.9245283, g: 0.68467426, b: 0.8653977, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time Progress: --:--'
+  m_text: 'Progress: --:--'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40936d6d6d9ed9c4fb7fac00bc145d5d, type: 2}
   m_sharedMaterial: {fileID: -5522426796145605742, guid: 40936d6d6d9ed9c4fb7fac00bc145d5d, type: 2}
@@ -1665,8 +1665,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4289522943
+  m_fontColor: {r: 1, g: 0.9265997, b: 0.6745283, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1683,8 +1683,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2822,9 +2822,9 @@ MonoBehaviour:
   fishContainer: {fileID: 1522675240}
   startY: 50
   maxDescentY: -1100
-  pomoMinutes: 0.01
-  breakMinutes: 0.01
-  totalPomos: 4
+  pomoMinutes: 1
+  breakMinutes: 0.05
+  totalPomos: 3
   seaDollarsReward: 100
 --- !u!1 &1352608659
 GameObject:
@@ -3435,7 +3435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b2c30c2b9f6b14fae7e29e62d5a290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  StateOnStart: 1
+  StateOnStart: 0
   taskListPanel: {fileID: 2123591602}
   battlePanel: {fileID: 1296142923}
   shopPanel: {fileID: 1029869923}
@@ -3476,7 +3476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.2, y: 118.7}
+  m_AnchoredPosition: {x: -16.2, y: 135}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691482797
@@ -3508,8 +3508,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285477762
+  m_fontColor: {r: 0.509434, g: 0.1994482, b: 0.4368218, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3526,8 +3526,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3613,7 +3613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7, y: 674}
+  m_AnchoredPosition: {x: -10, y: 686}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1784073040
@@ -3645,8 +3645,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283444332
-  m_fontColor: {r: 0.4245283, g: 0.1742168, b: 0.31288737, a: 1}
+    rgba: 4284494978
+  m_fontColor: {r: 0.509434, g: 0.2042542, b: 0.37591782, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3663,15 +3663,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 8
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3702,7 +3702,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -30.625061, w: 0}
+  m_margin: {x: -40.905746, y: 0, z: -60.62259, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
