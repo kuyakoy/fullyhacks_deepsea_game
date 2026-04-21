@@ -10,7 +10,9 @@ A gamified Pomodoro productivity tool developed for the FullyHacks 2026 hackatho
 
 ## Contributors
 **Marcos Garcia** - Programmer
+
 **Brian Hlonggul** - Programmer
+
 **Joshua Marquez** - Programmer, Art, Music
 
 ## Inspiration
